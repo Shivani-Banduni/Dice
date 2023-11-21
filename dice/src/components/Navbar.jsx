@@ -16,7 +16,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
-const Navbar = () => {
+const Navbar = ({callback}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const[searchitem,setsearchitem]=React.useState('')
   const [sortOption, setSortOption] = useState('stars');
@@ -40,9 +40,9 @@ const Navbar = () => {
     }
   };
 
-  const handleButtonClick = () => {
-    handleSearch();
-  };
+//   const handleButtonClick = () => {
+//     handleSearch();
+//   };
 
 
 
@@ -95,7 +95,7 @@ const Navbar = () => {
           </div>
 
         </div>
-        <Button    onClick={handleButtonClick}
+        <Button    onClick={(()=>callback({repos,handleSearch,showResults}))}
 
          varient="outlined" style={{color:'blue', border:'2px solid white', background:'white', marginLeft:'2%'}} className='btn'>Search</Button>
 

@@ -4,38 +4,51 @@ import { TextField, Select, MenuItem, Grid, Card, CardContent, Typography, Avata
 import Navbar from './Navbar';
 
 const Searchbar = () => {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [showResults, setShowResultss] = useState();
 
-  const [repos, setRepos] = useState([]);
-  const [sortOption, setSortOption] = useState('stars');
-  const [showResults, setShowResults] = useState(false);
+  const [data, setdata] = useState([]);
 
-  const handleSearch = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.github.com/search/repositories?q=${searchTerm}&sort=${sortOption}`
-      );
-      setRepos(response.data.items);
-      setShowResults(true);
-      console.log(repos,'repos')
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  const callback=({repos,handleSearch,showResults})=>{
+    // handleSearch()
+    console.log(handleSearch)
+    handleSearch()
+    setdata(repos)
+    setShowResultss(showResults)
+    console.log('callback',showResults)
+}
+//   const [sortOption, setSortOption] = useState('stars');
+//   const [showResults, setShowResults] = useState(false);
+
+//   const handleSearch = async () => {
+//     try {
+//       const response = await axios.get(
+//         `https://api.github.com/search/repositories?q=${searchTerm}&sort=${sortOption}`
+//       );
+//       setRepos(response.data.items);
+//       setShowResults(true);
+//       console.log(repos,'repos')
+//     } catch (error) {
+//       console.error('Error fetching data:', error);
+//     }
+//   };
 
 
 
-  const handleButtonClick = () => {
-    handleSearch();
-  };
+//   const handleButtonClick = () => {
+//     handleSearch();
+//   };
 
-  const handleSortChange = (e) => {
-    setSortOption(e.target.value);
-  };
+//   const handleSortChange = (e) => {
+//     setSortOption(e.target.value);
+//   };
+
+
+
+
 
   return (
       <>
-<Navbar/>
+<Navbar callback={callback}/>
 <Grid className='main' container spacing={2} justifyContent="center">
       {/* <Grid item xs={12} sm={6}>
         <TextField
@@ -65,7 +78,7 @@ const Searchbar = () => {
       {showResults && (
         <Grid item xs={12}>
           <Grid className='lower-div' container spacing={3}>
-            {repos.map((repo) => (
+            {data.map((repo) => (
               <Grid className='singlediv' key={repo.id} item xs={12} sm={6} md={4}>
                 <Card style={{ height: '100%' }}>
                   <CardContent>
