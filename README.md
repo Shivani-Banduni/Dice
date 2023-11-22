@@ -1,8 +1,9 @@
 # Dice
+Note: This application is mobile responsive as well.
+
 This project is a ReactJS application that utilizes GitHub's public API to search for repositories and display their details.
 Features
 
-Note: This application is mobile responsive as well.
 
 Search Field: Users can search for public repositories by typing in the search field. The app fetches data based on the entered query.
 
