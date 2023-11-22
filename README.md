@@ -58,4 +58,4 @@ Material-UI
 
 Credits
 
-This project is created by Shivani Banduni. Feel free to provide feedback!
+This project was created by Shivani Banduni. Feel free to provide feedback!
