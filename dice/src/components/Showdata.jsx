@@ -1,7 +1,7 @@
 // Searchbar.js
 import React, { useState } from 'react';
 import { Grid, Card, CardContent, Typography, Avatar } from '@mui/material';
-import Navbar from './Navbar';
+import Navbar from './Getdata';
 
 const Searchbar = () => {
   const [data, setData] = useState([]);

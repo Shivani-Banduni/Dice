@@ -1,15 +1,6 @@
 // Navbar.js
 import React, { useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  InputBase,
-  Menu,
-  MenuItem,
-  Button,
-  Select
-} from '@mui/material';
+import { AppBar,Toolbar,IconButton,InputBase,Menu,MenuItem,Button,Select} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
@@ -17,7 +8,8 @@ import axios from 'axios';
 const Navbar = ({ callback }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchitem, setSearchItem] = useState('');
-  const [sortOption, setSortOption] = useState('stars');
+  const [sortOption, setSortOption] = useState('');
+  const [initialRender, setInitialRender] = useState(true);
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,19 +21,34 @@ const Navbar = ({ callback }) => {
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
+    console.log(sortOption,'sortoption')
+    setInitialRender(false);
   };
+  // React.useEffect(() => {
+  //   if (!initialRender) { // Only execute handleSearch if initialRender is false
+  //     handleSearch();
+  //   }
+  // }, [sortOption,initialRender]);
+
+  React.useEffect(() => {
+    if (sortOption !== '' && !initialRender) {
+      handleSearch();
+    }
+  }, [sortOption, initialRender]);
+  
+
 
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `https://api.github.com/search/repositories?q=${searchitem}&sort=${sortOption}`
+        `https://api.github.com/search/repositories?q=${searchitem}`
       );
 
       let sortedData = response.data.items;
-
+      console.log(sortOption,"sortoptions")
       // Sorting the fetched data based on sortOption
       if (sortOption === 'stars') {
-        sortedData.sort((a, b) => a.stargazers_count - b.stargazers_count);
+        sortedData.sort((a, b) => b.stargazers_count - a.stargazers_count);
       } else if (sortOption === 'watchers_count') {
 
         sortedData.sort((a, b) => b.watchers_count - a.watchers_count);
@@ -54,6 +61,7 @@ const Navbar = ({ callback }) => {
       } else if (sortOption === 'updated_at') {
         sortedData.sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
       }
+      console.log(sortedData)
 
       callback({ repos: sortedData });
     } 
@@ -112,11 +120,12 @@ const Navbar = ({ callback }) => {
         </Button>
 
         <div className='sort-div'>
-          <Select
+          <Select 
             value={sortOption}
-            onChange={handleSortChange}
+            onChange={(e)=>handleSortChange(e)}
           >
-            <MenuItem value="stars">Stars</MenuItem>
+           <MenuItem value="">Show-By</MenuItem>
+            <MenuItem  value="stars">Stars</MenuItem>
             <MenuItem value="watchers_count">Watchers Count</MenuItem>
             <MenuItem value="score">Score</MenuItem>
             <MenuItem value="name">Name</MenuItem>
