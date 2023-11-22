@@ -1,4 +1,4 @@
-**Note:** This application is mobile responsive as well. We can get our results by pressing Enter on the keyboard.
+**Note:** This application is mobile responsive as well. We can get our results by pressing Enter on the keyboard OR by simply click on the Search button.
 
 This project is a ReactJS application that utilizes GitHub's public API to search for repositories and display their details.
 
